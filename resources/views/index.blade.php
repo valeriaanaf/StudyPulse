@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StudyTaskManager - Dashboard</title>
+    <title>Study Task Manager</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,9 +21,20 @@
                 <div class="bg-indigo-600 text-white p-2 rounded-xl shadow-md shadow-indigo-200">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" /></svg>
                 </div>
-                <span class="font-bold text-lg tracking-tight text-slate-900">StudyTask<span class="text-indigo-600">Manager</span></span>
+                <span class="font-bold text-lg tracking-tight text-slate-900">Study Task<span class="text-indigo-600"> Manager</span></span>
             </div>
             <div class="text-sm font-medium text-slate-500" id="live-date">Memuat Tanggal...</div>
+            <!-- Tombol Logout -->
+            <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                 @csrf
+                <button type="submit" class="btn btn-danger btn-sm d-flex align-items-center gap-2" style="cursor: pointer;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-right" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z"/>
+                        <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z"/>
+                    </svg>
+                    Logout
+                </button>
+            </form>
         </div>
     </nav>
 
@@ -58,7 +69,6 @@
             <div class="bg-white border border-slate-200 p-6 rounded-2xl shadow-sm sticky top-28">
                 <div class="mb-5">
                     <h2 class="text-lg font-bold text-slate-900">Buat Tugas Baru</h2>
-                    <p class="text-xs text-slate-400 mt-0.5">Masukkan detail instrumen tugas kuliah[cite: 20].</p>
                 </div>
                 
                 <form id="formTugas" class="space-y-4">
@@ -75,7 +85,7 @@
                         <input type="datetime-local" id="tenggat_waktu" required class="w-full mt-1.5 px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:bg-white focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 outline-none transition-all">
                     </div>
                     <button type="submit" class="w-full mt-2 bg-indigo-600 text-white py-3 rounded-xl text-sm font-semibold shadow-md shadow-indigo-100 hover:bg-indigo-700 active:scale-[0.98] transition-all cursor-pointer">
-                        Simpan ke Cloud Repository
+                        Simpan
                     </button>
                 </form>
             </div>
@@ -84,7 +94,6 @@
                 <div class="flex items-center justify-between mb-2 px-1">
                     <div>
                         <h2 class="text-lg font-bold text-slate-900">Daftar Tugas Aktif</h2>
-                        <p class="text-xs text-slate-400 mt-0.5">Memantau antrean tugas yang ditarik dari basis data[cite: 19].</p>
                     </div>
                 </div>
 
@@ -106,7 +115,7 @@
             weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
         });
 
-        // 1. ENGINE READ DATA & UPDATE WIDGET STATS
+        // Engine Read Data & Update Widget Stats
         async function muatTugas() {
             try {
                 const respon = await fetch(API_URL, { headers: { 'Accept': 'application/json' } });
@@ -178,7 +187,7 @@
             }
         }
 
-        // 2. ENGINE CREATE DATA 
+        // Engine Create Data
         document.getElementById('formTugas').addEventListener('submit', async (e) => {
             e.preventDefault();
             const dataInput = {
@@ -201,7 +210,7 @@
             }
         });
 
-        // 3. ENGINE UPDATE STATUS DATA
+        // Engine Update Status Data
         async function ubahStatus(id) {
             try {
                 const respon = await fetch(`${API_URL}/${id}`, {
@@ -214,7 +223,7 @@
             }
         }
 
-        // 4. ENGINE DELETE DATA
+        // Engine Delete Data
         async function hapusTugas(id) {
             if (confirm('Hapus data tugas dari database Cloud?')) {
                 try {

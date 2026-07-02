@@ -4,8 +4,8 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use App\Models\Tugas;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -16,6 +16,12 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             TugasSeeder::class,
+        ]);
+
+        User::create([
+            'name' => 'Mahasiswa Responsi',
+            'email' => 'admin@studypulse.com',
+            'password' => Hash::make('password123'),
         ]);
     }
 }
